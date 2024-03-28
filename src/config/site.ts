@@ -1,12 +1,7 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-	name: 'KiiroTemplate',
-	description: 'Template para inicio de projeto com nextjs',
-	mainNav: [
-		{
-			title: 'Home',
-			href: '/'
-		}
-	]
+	name: 'Real-Estate',
+	description:
+		'This app is built with Next.js 14, Postgresql, Tailwind, shadcn/ui, AuthJS and Radix UI.'
 }
