@@ -12,7 +12,7 @@ This application does not have functionality yet and was created only for the pu
 
 **Interface**
 
-- [ ] Login page;
+- [x] Login page;
 - [ ] Home page;
 - [ ] Listings page;
 - [ ] Favorites page;
@@ -23,6 +23,9 @@ This application does not have functionality yet and was created only for the pu
 **Functions**
 
 - [ ] User authentication (signup, login, logout);
+  - [x] Signup
+  - [x] Login
+  - [ ] Logout
 - [ ] Add listings to favorites;
 - [ ] Pagination for listings;
 - [ ] Manage property (add, delete, edit);

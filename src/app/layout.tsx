@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 
 import '../styles/globals.css'
 
+import { Toaster } from 'sonner'
+
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { siteConfig } from '@/config/site'
 import { lexend } from '@/lib/fonts'
@@ -27,6 +29,7 @@ export default function RootLayout({
 			<body className={cn('font-sans', lexend.variable)}>
 				<Provider providers={[AuthProvider]}>
 					{children}
+					<Toaster />
 					<TailwindIndicator />
 				</Provider>
 			</body>
