@@ -6,7 +6,7 @@ import { Icons } from '@/components/icons'
 
 export const TopBar = () => {
 	return (
-		<section className="border-b border-neutral-900">
+		<section className="border-b dark:border-neutral-900">
 			<div className="container flex h-[64px] items-center justify-between">
 				<div className="flex items-center gap-4">
 					<Icons.phone size={24} />

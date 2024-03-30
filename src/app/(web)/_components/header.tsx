@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import { Building2, Home, Menu, Smartphone, Tent, User } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -31,6 +32,10 @@ export const Header = () => {
 		}
 	}
 
+	const test = () => {
+		toast.info('zap')
+	}
+
 	useEffect(() => {
 		handleScroll()
 		window.addEventListener('scroll', handleScroll)
@@ -41,8 +46,8 @@ export const Header = () => {
 
 	return (
 		<header
-			className={cn('sticky top-0 z-30 w-full bg-transparent py-4 shadow', {
-				'border-b border-neutral-900 bg-black/90': scrolledFromTop
+			className={cn('sticky top-0 z-30 w-full bg-transparent py-4 ', {
+				'border-b bg-background/90 dark:border-neutral-900 ': scrolledFromTop
 			})}
 		>
 			<div className="container flex items-center justify-between">
@@ -60,7 +65,7 @@ export const Header = () => {
 									href="/"
 									className="group shrink-0 items-center justify-center gap-2  text-lg font-semibold text-primary-foreground md:text-base"
 								>
-									<h1 className="font-medium text-white md:text-xl ">
+									<h1 className="font-medium text-black dark:text-white md:text-xl ">
 										RealEstate
 									</h1>
 									<span className="sr-only">Acme Inc</span>
@@ -79,7 +84,7 @@ export const Header = () => {
 						href="/"
 					>
 						<Tent className="hidden  md:block" size={24} />
-						<h1 className="font-medium text-white md:text-xl ">RealEstate</h1>
+						<h1 className="font-medium  md:text-xl ">RealEstate</h1>
 					</Link>
 				</div>
 
@@ -105,8 +110,9 @@ export const Header = () => {
 							<DropdownMenuLabel>Menu</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Favoritos</DropdownMenuItem>
+							<DropdownMenuItem>Imóveis</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Sair</DropdownMenuItem>
+							<DropdownMenuItem onClick={test}>Sair</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>

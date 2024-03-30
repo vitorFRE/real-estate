@@ -18,6 +18,7 @@ export const SocialLogins = () => {
 		} catch (error) {
 			toast.error('Ocorreu um erro, tente novamente mais tarde!')
 		} finally {
+			toast.success('Logado')
 			setIsLoading(false)
 		}
 	}

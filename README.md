@@ -14,6 +14,10 @@ This application does not have functionality yet and was created only for the pu
 
 - [x] Login page;
 - [ ] Home page;
+  - [ ] Hero
+  - [ ] Listings
+  - [ ] Feedbacks
+  - [ ] Services
 - [ ] Listings page;
 - [ ] Favorites page;
 - [ ] Listing page;
@@ -36,4 +40,4 @@ This application does not have functionality yet and was created only for the pu
 
 **ToDo**
 
-- [ ] Add a dropdown menu to the user icon in the header (Listings, Favorites, Logout, Dashboard if is an ADMIN);
+- [x] Add a dropdown menu to the user icon in the header (Listings, Favorites, Logout, Dashboard if is an ADMIN);

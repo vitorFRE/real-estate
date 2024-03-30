@@ -1,4 +1,5 @@
 import { Header } from './_components/header'
+import { ModeToggle } from './_components/mode-toggle'
 import { TopBar } from './_components/top-bar'
 
 const Name = () => {
@@ -8,6 +9,7 @@ const Name = () => {
 			<Header />
 
 			<h1>oi teste</h1>
+			<ModeToggle />
 		</div>
 	)
 }
