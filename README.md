@@ -29,4 +29,11 @@ This application does not have functionality yet and was created only for the pu
 - [ ] Add listings to favorites;
 - [ ] Pagination for listings;
 - [ ] Manage property (add, delete, edit);
+  - [ ] Add
+  - [ ] Edit
+  - [ ] Delete
 - [ ] View statistics and analytics about listings;
+
+**ToDo**
+
+- [ ] Add a dropdown menu to the user icon in the header (Listings, Favorites, Logout, Dashboard if is an ADMIN);

@@ -1,9 +1,13 @@
 import {
+	Facebook,
 	Github,
 	Home,
+	Instagram,
 	Layers,
 	LucideIcon,
 	Mail,
+	Phone,
+	User,
 	UserRoundSearch
 } from 'lucide-react'
 
@@ -14,5 +18,9 @@ export const Icons = {
 	github: Github,
 	home: Home,
 	layers: Layers,
-	userRoundSeacrch: UserRoundSearch
+	userRoundSeacrch: UserRoundSearch,
+	facebook: Facebook,
+	instagram: Instagram,
+	phone: Phone,
+	user: User
 }
