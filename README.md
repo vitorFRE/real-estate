@@ -13,11 +13,11 @@ This application does not have functionality yet and was created only for the pu
 **Interface**
 
 - [x] Login page;
-- [ ] Home page;
-  - [ ] Hero
-  - [ ] Listings
-  - [ ] Feedbacks
-  - [ ] Services
+- [x] Home page;
+  - [x] Hero
+  - [x] Listings
+  - [x] Feedbacks
+  - [x] Services
 - [ ] Listings page;
 - [ ] Favorites page;
 - [ ] Listing page;

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import { Building2, Home, Menu, Smartphone, Tent, User } from 'lucide-react'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -18,7 +17,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 
-import FavoritesHeartCount from './favorite-hearts-count'
+import { FavoritesHeartCount } from './favorite-hearts-count'
 import { NavItem } from './nav-link'
 
 export const Header = () => {
@@ -30,10 +29,6 @@ export const Header = () => {
 		} else {
 			setScrolledFromTop(false)
 		}
-	}
-
-	const test = () => {
-		toast.info('zap')
 	}
 
 	useEffect(() => {
@@ -112,7 +107,7 @@ export const Header = () => {
 							<DropdownMenuItem>Favoritos</DropdownMenuItem>
 							<DropdownMenuItem>Imóveis</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem onClick={test}>Sair</DropdownMenuItem>
+							<DropdownMenuItem>Sair</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>

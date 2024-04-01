@@ -1,4 +1,5 @@
 import {
+	ArrowUpRight,
 	Facebook,
 	Github,
 	Home,
@@ -22,5 +23,6 @@ export const Icons = {
 	facebook: Facebook,
 	instagram: Instagram,
 	phone: Phone,
-	user: User
+	user: User,
+	arrowUpRight: ArrowUpRight
 }

@@ -11,6 +11,8 @@ import AuthProvider from '@/providers/auth-provider/auth-provider'
 import { Provider } from '@/providers/main-provider'
 import { ThemeProvider } from '@/providers/theme-provider/theme-provider'
 
+import { Footer } from './(web)/_components/footer'
+
 export const metadata: Metadata = {
 	title: {
 		default: siteConfig.name,
@@ -31,6 +33,7 @@ export default function RootLayout({
 					{children}
 					<Toaster />
 					<TailwindIndicator />
+					<Footer />
 				</Provider>
 			</body>
 		</html>

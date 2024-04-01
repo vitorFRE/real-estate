@@ -6,7 +6,7 @@ import { Heart } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
-const FavoritesHeartCount: React.FC = () => {
+export const FavoritesHeartCount: React.FC = () => {
 	const currentUser = false
 
 	return (
@@ -45,5 +45,3 @@ const FavoritesHeartCount: React.FC = () => {
 		</>
 	)
 }
-
-export default FavoritesHeartCount
