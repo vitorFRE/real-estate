@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Building2, Home, Menu, Smartphone, Tent, User } from 'lucide-react'
+import { signOut, useSession } from 'next-auth/react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,6 +24,8 @@ import { NavItem } from './nav-link'
 
 export const Header = () => {
 	const [scrolledFromTop, setScrolledFromTop] = useState(false)
+	const { data: session } = useSession()
+	const pathname = usePathname()
 
 	const handleScroll = () => {
 		if (window.scrollY >= 50) {
@@ -38,6 +42,10 @@ export const Header = () => {
 			window.removeEventListener('scroll', handleScroll)
 		}
 	}, [])
+
+	if (pathname === '/login' || pathname === '/dashboard') {
+		return null
+	}
 
 	return (
 		<header
@@ -102,12 +110,31 @@ export const Header = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>Menu</DropdownMenuLabel>
+							<DropdownMenuLabel>
+								{session ? `Ola ${session?.user?.name}` : 'Menu'}
+							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Favoritos</DropdownMenuItem>
-							<DropdownMenuItem>Imóveis</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link className="cursor-pointer" href={'/imoveis'}>
+									Imóveis
+								</Link>
+							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Sair</DropdownMenuItem>
+							{session ? (
+								<DropdownMenuItem
+									onClick={() => signOut()}
+									className="cursor-pointer text-red-500"
+								>
+									Sair
+								</DropdownMenuItem>
+							) : (
+								<DropdownMenuItem asChild>
+									<Link className="cursor-pointer" href={'/login'}>
+										Login
+									</Link>
+								</DropdownMenuItem>
+							)}
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>

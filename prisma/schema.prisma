@@ -41,13 +41,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  role          Role       @default(USER)
+  properties    Property[]
 }
 
 model VerificationToken {
@@ -56,4 +58,51 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  AGENT
+  ADMIN
+}
+
+model Property {
+  id            String   @id @default(cuid())
+  title         String
+  description   String   @db.VarChar(600)
+  price         Int
+  area          Float
+  buildingArea  Float
+  bedroomCount  Int
+  bathroomCount Int
+  city          String
+  state         String
+  roomCount     Int
+  locationValue String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  latitude      Float
+  longitude     Float
+
+  images PropertyImage[]
+
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String?
+
+  @@index([ownerId])
+}
+
+model PropertyImage {
+  id String @id @default(cuid())
+
+  imageUrl String
+  imageId  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId String?
+
+  @@unique([propertyId, imageUrl])
 }

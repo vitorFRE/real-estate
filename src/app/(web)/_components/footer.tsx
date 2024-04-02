@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { ChevronsUp } from 'lucide-react'
 
@@ -10,8 +11,14 @@ import { footerSections } from '../_constants/data'
 import { ModeToggle } from './mode-toggle'
 
 export const Footer = () => {
+	const pathname = usePathname()
+
 	function backToTop() {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
+	}
+
+	if (pathname === '/login' || pathname === '/dashboard') {
+		return null
 	}
 
 	return (

@@ -1,10 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Icons } from '@/components/icons'
 
 export const TopBar = () => {
+	const pathname = usePathname()
+
+	if (pathname === '/login' || pathname === '/dashboard') {
+		return null
+	}
 	return (
 		<section className="border-b dark:border-neutral-900">
 			<div className="container flex h-[64px] items-center justify-between">

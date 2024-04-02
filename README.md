@@ -18,7 +18,7 @@ This application does not have functionality yet and was created only for the pu
   - [x] Listings
   - [x] Feedbacks
   - [x] Services
-- [ ] Listings page;
+- [x] Listings page;
 - [ ] Favorites page;
 - [ ] Listing page;
 - [ ] Contact page;

@@ -12,6 +12,8 @@ import { Provider } from '@/providers/main-provider'
 import { ThemeProvider } from '@/providers/theme-provider/theme-provider'
 
 import { Footer } from './(web)/_components/footer'
+import { Header } from './(web)/_components/header'
+import { TopBar } from './(web)/_components/top-bar'
 
 export const metadata: Metadata = {
 	title: {
@@ -30,6 +32,8 @@ export default function RootLayout({
 		<html lang="pt-br" suppressHydrationWarning>
 			<body className={cn('font-sans', lexend.variable)}>
 				<Provider providers={[AuthProvider, ThemeProvider]}>
+					<TopBar />
+					<Header />
 					{children}
 					<Toaster />
 					<TailwindIndicator />

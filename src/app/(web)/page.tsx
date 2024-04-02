@@ -5,17 +5,12 @@ import {
 } from '@/components/ui/carousel'
 
 import { FeedbackCard, PropertyCard, ServiceCard } from './_components/cards'
-import { Header } from './_components/header'
 import { Heading } from './_components/heading'
-import { TopBar } from './_components/top-bar'
 import { feedbackData, servicesData } from './_constants/data'
 
 const Name = () => {
 	return (
 		<>
-			<TopBar />
-			<Header />
-
 			{/* hero */}
 			<section className="relative h-[350px] bg-hero bg-cover bg-center">
 				<div className="absolute inset-0 bg-black opacity-5 dark:opacity-80"></div>
