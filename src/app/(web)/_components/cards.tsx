@@ -24,14 +24,19 @@ interface PropertyCardProps {
 	description: string
 	bedrooms: number
 	bathrooms: number
-	size: number
+	size: string
 }
 
 export const PropertyCard = (props: PropertyCardProps) => {
 	return (
 		<Card>
 			<CardHeader className="relative h-[220px]">
-				<Image alt="s" className="rounded-t-lg" fill src={props.imgUrl} />
+				<Image
+					alt="s"
+					className="rounded-t-lg object-cover"
+					fill
+					src={props.imgUrl}
+				/>
 			</CardHeader>
 			<CardContent>
 				<div className="mt-4 flex flex-col gap-2">
@@ -57,7 +62,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 				</span>
 				<span className="flex items-center gap-2 text-foreground/70">
 					<LandPlot className="text-foreground" />
-					{props.size}m
+					{props.size}
 				</span>
 			</CardFooter>
 		</Card>

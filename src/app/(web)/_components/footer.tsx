@@ -17,7 +17,7 @@ export const Footer = () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 
-	if (pathname === '/login' || pathname === '/dashboard') {
+	if (pathname === '/login' || pathname.startsWith('/dashboard')) {
 		return null
 	}
 

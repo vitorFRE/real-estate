@@ -14,12 +14,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { getProperties } from '@/server/querries/get-properties'
 
 import { PropertyCard } from '../_components/cards'
 import { Heading } from '../_components/heading'
 import { FormInputMask } from '../../../components/form/input-mask'
 
-const ImoveisPage = () => {
+const ImoveisPage = async () => {
+	const properties = await getProperties()
 	return (
 		<section>
 			<div className="relative h-[206px] bg-hero bg-cover bg-center">
@@ -145,21 +147,20 @@ const ImoveisPage = () => {
 				</div>
 
 				<div className="grid grid-cols-1 gap-8 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 ">
-					{Array.from({ length: 24 })
-
-						.map((_, index) => (
+					{properties.data &&
+						properties.data.map((property) => (
 							<PropertyCard
-								key={index}
-								imgUrl="/hero-img.jpg"
-								type="Apartamento"
-								title="Altas flores"
-								city="Jardim das Flores"
-								state="SP"
-								neighborhood="Jardim das Flores"
-								description="Localizada em uma das informações mais nobres de São Paulo, a Alta flores é uma propriedade incrivel que oferece o melhor em conforto e lazer."
-								bedrooms={3}
-								bathrooms={2}
-								size={300}
+								key={property.id}
+								imgUrl={property.images[0].url || '/placeholder.svg'}
+								type={property.locationValue}
+								title={property.title}
+								city={property.city}
+								state={property.state}
+								neighborhood={property.city}
+								description={property.description}
+								bedrooms={property.bedroomCount}
+								bathrooms={property.bathroomCount}
+								size={property.buildingArea}
 							/>
 						))}
 				</div>

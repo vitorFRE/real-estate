@@ -70,39 +70,34 @@ model Property {
   id            String   @id @default(cuid())
   title         String
   description   String   @db.VarChar(600)
-  price         Int
-  area          Float
-  buildingArea  Float
+  price         String
+  area          String
+  buildingArea  String
   bedroomCount  Int
   bathroomCount Int
   city          String
   state         String
-  roomCount     Int
   locationValue String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   latitude      Float
   longitude     Float
 
-  images PropertyImage[]
-
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
+
+  images Media[]
 
   @@index([ownerId])
 }
 
-model PropertyImage {
-  id String @id @default(cuid())
-
-  imageUrl String
-  imageId  String
-
+model Media {
+  id        String   @id @default(cuid())
+  url       String?  @default("https://placehold.co/600x600/png?text=Image+Placeholder&font=roboto")
+  path      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Property   Property? @relation(fields: [propertyId], references: [id])
+  Property   Property? @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   propertyId String?
-
-  @@unique([propertyId, imageUrl])
 }

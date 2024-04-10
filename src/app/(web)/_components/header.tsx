@@ -43,7 +43,7 @@ export const Header = () => {
 		}
 	}, [])
 
-	if (pathname === '/login' || pathname === '/dashboard') {
+	if (pathname === '/login' || pathname.startsWith('/dashboard')) {
 		return null
 	}
 
