@@ -2,8 +2,12 @@ import { useState } from 'react'
 
 import { toast } from 'sonner'
 
-import { CreatePropertyData } from '@/app/(app)/_components/forms/create-property-form'
+import {
+	CreatePropertyData,
+	CreatePropertyDTO
+} from '@/app/(app)/_validations/create-property-form-schema'
 import { uploadImage } from '@/lib/supabase'
+import { validateMediaFiles } from '@/lib/utils'
 import { createProperty, ICreateMedia } from '@/server/mutation/create-property'
 
 export const useCreateProperty = () => {
@@ -19,7 +23,19 @@ export const useCreateProperty = () => {
 		let resultsUpload = []
 
 		try {
-			if (!data.media) {
+			const parsedData = CreatePropertyDTO.safeParse(data)
+
+			if (!parsedData.success) {
+				toast.error('Ocorreu um erro ao criar garagem')
+				setIsLoading(false)
+				return
+			}
+
+			if (!validateMediaFiles(data.media)) {
+				toast.error(
+					'Arquivos de mídia inválidos. Certifique-se de que são imagens JPEG ou PNG e que o tamanho total não ultrapasse 10MB.'
+				)
+				setIsLoading(false)
 				return
 			}
 
@@ -62,6 +78,7 @@ export const useCreateProperty = () => {
 				longitude: data.longitude,
 				price: data.price,
 				state: data.state,
+				neighborhood: data.neighborhood,
 				title: data.title,
 				media: filteredUploads
 			})
@@ -71,10 +88,11 @@ export const useCreateProperty = () => {
 			} else {
 				toast.error(result.message)
 			}
-
-			console.log(resultsUpload)
 		} catch (error) {
-			console.log(error)
+			return {
+				status: 'error',
+				message: `${error}`
+			}
 		} finally {
 			setIsLoading(false)
 		}

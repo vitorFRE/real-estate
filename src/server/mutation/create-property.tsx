@@ -19,6 +19,7 @@ interface ICreateProperty {
 	bathroomCount: number
 	city: string
 	state: string
+	neighborhood: string
 	area: string
 	buildingArea: string
 	latitude: number
@@ -30,7 +31,12 @@ interface ICreateProperty {
 export const createProperty = async (props: ICreateProperty) => {
 	try {
 		const session = await getSession()
+
 		if (!session) {
+			throw new Error('Unauthorized')
+		}
+
+		if (session.user.role !== 'ADMIN') {
 			throw new Error('Unauthorized')
 		}
 
@@ -48,6 +54,7 @@ export const createProperty = async (props: ICreateProperty) => {
 				buildingArea: props.buildingArea,
 				latitude: props.latitude,
 				longitude: props.longitude,
+				neighborhood: props.neighborhood,
 				owner: { connect: { id: session.user.id } },
 				images: {
 					create: props.media.map((media) => ({
@@ -63,13 +70,12 @@ export const createProperty = async (props: ICreateProperty) => {
 
 		return {
 			status: 'success',
-			message: 'Property created successfully'
+			message: 'Propriedade criada'
 		}
 	} catch (error) {
-		console.log(error)
 		return {
 			status: 'error',
-			message: 'Something went wrong'
+			message: `${error}`
 		}
 	}
 }

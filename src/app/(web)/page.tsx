@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import {
 	Carousel,
 	CarouselContent,
@@ -27,15 +28,15 @@ const Name = async () => {
 					description="Confira nossa seleção de imóveis que podem ser perfeitos para você"
 				/>
 
-				<Carousel
-					opts={{
-						align: 'start'
-					}}
-					className="mt-8 w-full md:mt-16"
-				>
-					<CarouselContent>
-						{properties.data &&
-							properties.data.map((property) => (
+				{properties.data ? (
+					<Carousel
+						opts={{
+							align: 'start'
+						}}
+						className="mt-8 w-full md:mt-16"
+					>
+						<CarouselContent>
+							{properties.data.map((property) => (
 								<CarouselItem
 									key={property.id}
 									className="md:basis-1/2 lg:basis-1/3"
@@ -47,7 +48,7 @@ const Name = async () => {
 											title={property.title}
 											city={property.city}
 											state={property.state}
-											neighborhood={property.city}
+											neighborhood={property.neighborhood}
 											description={property.description}
 											bedrooms={property.bedroomCount}
 											bathrooms={property.bathroomCount}
@@ -56,8 +57,17 @@ const Name = async () => {
 									</div>
 								</CarouselItem>
 							))}
-					</CarouselContent>
-				</Carousel>
+						</CarouselContent>
+					</Carousel>
+				) : (
+					<div className="mt-8 flex w-full flex-col items-center gap-4">
+						<p className="max-w-md text-center text-muted-foreground">
+							<span className="text-foreground">Ops</span>, para quem não temos
+							propriedades disponíveis, tem alguma para vender? Anuncie aqui!
+						</p>
+						<Button>Venda Conosco!</Button>
+					</div>
+				)}
 			</section>
 
 			{/* feedback */}

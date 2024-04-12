@@ -3,10 +3,10 @@
 import React from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Building, Building2, Home } from 'lucide-react'
+import { ArrowUpIcon, Building, Building2, Home } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import Dropzone from 'react-dropzone'
 import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import {
 	Form,
@@ -20,62 +20,11 @@ import { FormInputMask } from '@/components/form/input-mask'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { useCreateProperty } from '@/hooks/use-create-property'
 
-export const CreatePropertyDTO = z.object({
-	title: z.string().min(1, {
-		message: 'O titulo deve conter pelo menos um caractere.'
-	}),
-	locationValue: z.string({
-		required_error: 'Por favor selecione o tipo do imovel.'
-	}),
-	price: z.string().min(1, {
-		message: 'O preço deve conter pelo menos um caractere.'
-	}),
-	description: z.string().min(1, {
-		message: 'A descrição deve conter pelo menos um caractere.'
-	}),
-	bedroomCount: z
-		.number()
-		.min(1, {
-			message: 'O número de quartos deve conter pelo menos um caractere.'
-		})
-		.max(30, {
-			message: 'O número de quartos não pode ser maior que 30.'
-		}),
-	bathroomCount: z
-		.number()
-		.min(1, {
-			message: 'O número de banheiros deve conter pelo menos um caractere.'
-		})
-		.max(20, {
-			message: 'O número de banheiros não pode ser maior que 20.'
-		}),
-	city: z.string().min(2, {
-		message: 'A cidade deve conter pelo menos dois caractere.'
-	}),
-	state: z
-		.string()
-		.min(2, {
-			message: 'O estado deve conter pelo menos dois caractere.'
-		})
-		.max(2, {
-			message: 'O estado deve conter no maximo dois caractere.'
-		}),
-	area: z.string().min(1, {
-		message: 'A area deve conter pelo menos um caractere.'
-	}),
-	buildingArea: z.string().min(1, {
-		message: 'A area construida deve conter pelo menos um caractere.'
-	}),
-	latitude: z.number().min(1, {
-		message: 'A latitude deve conter pelo menos um caractere.'
-	}),
-	longitude: z.number().min(1, {
-		message: 'A longitude deve conter pelo menos um caractere.'
-	}),
-	media: z.custom<FileList>().optional().nullable()
-})
-
-export type CreatePropertyData = z.infer<typeof CreatePropertyDTO>
+import {
+	CreatePropertyData,
+	CreatePropertyDTO
+} from '../../_validations/create-property-form-schema'
+import { LocationPicker } from '../location-picker'
 
 export const CreatepropertyForm = () => {
 	const { data: session } = useSession()
@@ -86,20 +35,18 @@ export const CreatepropertyForm = () => {
 		reset,
 		getValues,
 		control,
+		setValue,
 		watch,
 		formState: { errors }
 	} = useForm<CreatePropertyData>({
-		resolver: zodResolver(CreatePropertyDTO),
-		defaultValues: {
-			latitude: 32131231321,
-			longitude: 3213919321
-		}
+		resolver: zodResolver(CreatePropertyDTO)
 	})
 
-	const { create: createProperty } = useCreateProperty()
+	const { create: createProperty, isLoading } = useCreateProperty()
 
 	const onSubmit = async (data: CreatePropertyData) => {
 		await createProperty({ data, userId: session?.user.id as string })
+		console.log(data)
 		reset()
 	}
 
@@ -116,7 +63,7 @@ export const CreatepropertyForm = () => {
 							<div>
 								<FormLabel>Tipo</FormLabel>
 								<RadioGroup
-									className="flex max-w-md gap-8 pt-2"
+									className="flex max-w-md flex-wrap gap-8 pt-2"
 									onValueChange={field.onChange}
 								>
 									<FormGroup>
@@ -174,6 +121,21 @@ export const CreatepropertyForm = () => {
 						)
 					}}
 				/>
+
+				<FormGroup>
+					<FormLabel>Localização no mapa</FormLabel>
+
+					<LocationPicker
+						onLocationSelect={(lat, lng) => {
+							setValue('latitude', lat)
+							setValue('longitude', lng)
+						}}
+						initialLocation={null}
+					/>
+					{errors.latitude && errors.longitude && (
+						<span className="text-red-500">{errors.latitude.message}</span>
+					)}
+				</FormGroup>
 
 				<FormGroup>
 					<FormLabel htmlFor="title">Titulo</FormLabel>
@@ -258,6 +220,19 @@ export const CreatepropertyForm = () => {
 					)}
 				</FormGroup>
 				<FormGroup>
+					<FormLabel htmlFor="neighborhood">Bairro</FormLabel>
+					<FormInput
+						className="mt-1"
+						id="neighborhood"
+						type="text"
+						placeholder="Bairro..."
+						{...register('neighborhood')}
+					/>
+					{errors.neighborhood && (
+						<span className="text-red-500">{errors.neighborhood.message}</span>
+					)}
+				</FormGroup>
+				<FormGroup>
 					<FormLabel htmlFor="state">Estado</FormLabel>
 					<FormInput
 						className="mt-1"
@@ -285,7 +260,7 @@ export const CreatepropertyForm = () => {
 					)}
 				</FormGroup>
 				<FormGroup>
-					<FormLabel htmlFor="buildingArea">Area</FormLabel>
+					<FormLabel htmlFor="buildingArea">Area Construida</FormLabel>
 					<FormInputMask
 						mask="meters"
 						className="mt-1"
@@ -299,36 +274,63 @@ export const CreatepropertyForm = () => {
 					)}
 				</FormGroup>
 
-				<FormGroup>
-					<FormLabel
-						htmlFor="logo"
-						className="block w-full max-w-md overflow-hidden rounded-md border"
-					>
-						<div className="mt-2 grid grid-cols-3 gap-4">
-							{Array.from(watchMedia || []).map((file, index) => (
-								<picture key={index}>
-									<img
-										src={URL.createObjectURL(file) || 'placeholder.svg'}
-										alt={`Imagem ${index + 1}`}
-										className="h-24 w-full rounded-md object-cover"
-									/>
-								</picture>
-							))}
-						</div>
+				<Controller
+					control={control}
+					name="media"
+					render={() => (
+						<Dropzone
+							onDrop={(acceptedFiles) => {
+								setValue('media', acceptedFiles as unknown as FileList, {
+									shouldValidate: true
+								})
+							}}
+						>
+							{({ getRootProps, getInputProps, isDragActive }) => (
+								<div className="flex flex-col gap-1">
+									<FormLabel>Imagens</FormLabel>
+									<div
+										className="mt-2 cursor-pointer rounded-lg border border-dashed  p-4"
+										{...getRootProps()}
+									>
+										<input {...getInputProps()} />
+										<div className="flex flex-col items-center justify-center gap-4">
+											<ArrowUpIcon className="h-5 w-5 fill-current" />
+											{isDragActive ? (
+												<p>Arraste os arquivos aqui...</p>
+											) : (
+												<p>
+													Arraste e solte os arquivos aqui, ou clique para
+													selecionar os arquivos
+												</p>
+											)}
+											{errors.media && (
+												<span className="text-red-500">
+													{errors.media.message}
+												</span>
+											)}
+										</div>
+									</div>
 
-						<FormInput
-							id="logo"
-							type="file"
-							className="hidden"
-							multiple
-							{...register('media')}
-						/>
-					</FormLabel>
-				</FormGroup>
+									<div className="mt-2 grid grid-cols-3 gap-4">
+										{Array.from(watchMedia || []).map((file, index) => (
+											<picture key={index}>
+												<img
+													src={URL.createObjectURL(file)}
+													alt={`Imagem ${index + 1}`}
+													className="h-24 w-full rounded-md object-cover"
+												/>
+											</picture>
+										))}
+									</div>
+								</div>
+							)}
+						</Dropzone>
+					)}
+				/>
 			</div>
 			<FormGroup className="mt-6">
-				<FormButton type="submit" className="w-full">
-					criar
+				<FormButton disabled={isLoading} type="submit" className="w-full">
+					{isLoading ? 'Criando...' : 'Criar'}
 				</FormButton>
 			</FormGroup>
 		</Form>

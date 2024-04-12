@@ -146,6 +146,34 @@ const ImoveisPage = async () => {
 					</DropdownMenu>
 				</div>
 
+				{properties.data ? (
+					<div className="grid grid-cols-1 gap-8 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 ">
+						{properties.data.map((property) => (
+							<PropertyCard
+								key={property.id}
+								imgUrl={property.images[0].url || '/placeholder.svg'}
+								type={property.locationValue}
+								title={property.title}
+								city={property.city}
+								state={property.state}
+								neighborhood={property.neighborhood}
+								description={property.description}
+								bedrooms={property.bedroomCount}
+								bathrooms={property.bathroomCount}
+								size={property.buildingArea}
+							/>
+						))}
+					</div>
+				) : (
+					<div className="mt-8 flex w-full flex-col items-center gap-4">
+						<p className="max-w-md text-center text-muted-foreground">
+							<span className="text-foreground">Ops</span>, para quem não temos
+							propriedades disponíveis, tem alguma para vender? Anuncie aqui!
+						</p>
+						<Button>Venda Conosco!</Button>
+					</div>
+				)}
+
 				<div className="grid grid-cols-1 gap-8 pt-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 ">
 					{properties.data &&
 						properties.data.map((property) => (

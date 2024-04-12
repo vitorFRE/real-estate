@@ -5,7 +5,6 @@ import {
 	Building,
 	Home,
 	LayoutDashboard,
-	LogOut,
 	Plus,
 	Settings
 } from 'lucide-react'
@@ -13,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 import { SidebarItem } from './side-bar-item'
+import { SignOut } from './signout-button'
 
 export const SideBar = () => {
 	return (
@@ -49,13 +49,7 @@ export const SideBar = () => {
 						<Settings />
 						<span>Configurações</span>
 					</SidebarItem>
-					<Button
-						variant={'ghost'}
-						className="flex w-full select-none items-center justify-start gap-2 rounded-md p-2 text-sm opacity-50 hover:text-red-600 hover:opacity-100"
-					>
-						<LogOut />
-						<span>Sair</span>
-					</Button>
+					<SignOut />
 				</div>
 			</div>
 		</div>

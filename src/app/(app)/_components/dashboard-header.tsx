@@ -2,37 +2,31 @@ import { ElementType } from 'react'
 import Link from 'next/link'
 
 import {
-	Badge,
+	Building,
 	Home,
-	LineChart,
+	LayoutDashboard,
 	Menu,
-	Package,
-	Package2,
-	ShoppingCart,
-	Users
+	Plus,
+	Settings
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle
-} from '@/components/ui/card'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+
+import { SidebarItem } from './side-bar-item'
+import { SignOut } from './signout-button'
 
 interface DashboardHeaderProps {
 	icon: ElementType
 	title: string
 }
 
-export const DashboardHeader = ({
+export const DashboardHeader = async ({
 	title,
 	icon: Icon
 }: DashboardHeaderProps) => {
 	return (
-		<div className="flex items-center justify-between border-b px-4">
+		<div className="flex flex-row items-center justify-between border-b px-4 md:flex-row-reverse">
 			<div className="flex items-center gap-4 backdrop-blur-md">
 				<Sheet>
 					<SheetTrigger asChild>
@@ -45,78 +39,43 @@ export const DashboardHeader = ({
 							<span className="sr-only">Toggle navigation menu</span>
 						</Button>
 					</SheetTrigger>
-					<SheetContent side="left" className="flex flex-col">
-						<nav className="grid gap-2 text-lg font-medium">
+					<SheetContent side="left" className="z-[9999] flex flex-col">
+						<nav className="grid items-start gap-1 px-2 text-sm font-medium lg:px-4">
 							<Link
-								href="#"
-								className="flex items-center gap-2 text-lg font-semibold"
+								href="/"
+								className="mb-6 flex items-center gap-2 px-2 text-lg font-semibold"
 							>
-								<Package2 className="h-6 w-6" />
-								<span className="sr-only">Acme Inc</span>
+								<Home className="h-6 w-6" />
+								<span className="sr-only">Real Estate</span>
 							</Link>
-							<Link
-								href="#"
-								className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-							>
-								<Home className="h-5 w-5" />
-								Dashboard
-							</Link>
-							<Link
-								href="#"
-								className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-							>
-								<ShoppingCart className="h-5 w-5" />
-								Orders
-								<Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-									6
-								</Badge>
-							</Link>
-							<Link
-								href="#"
-								className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-							>
-								<Package className="h-5 w-5" />
-								Products
-							</Link>
-							<Link
-								href="#"
-								className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-							>
-								<Users className="h-5 w-5" />
-								Customers
-							</Link>
-							<Link
-								href="#"
-								className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-							>
-								<LineChart className="h-5 w-5" />
-								Analytics
-							</Link>
+							<SidebarItem href="/dashboard">
+								<LayoutDashboard />
+								<span>Inicio</span>
+							</SidebarItem>
+							<SidebarItem href="/dashboard/propriedades">
+								<Building />
+								<span>Propriedade</span>
+							</SidebarItem>
+							<SidebarItem href="/dashboard/adicionar">
+								<Plus />
+								<span>Adicionar propriedade</span>
+							</SidebarItem>
 						</nav>
-						<div className="mt-auto">
-							<Card>
-								<CardHeader>
-									<CardTitle>Upgrade to Pro</CardTitle>
-									<CardDescription>
-										Unlock all features and get unlimited access to our support
-										team.
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<Button size="sm" className="w-full">
-										Upgrade
-									</Button>
-								</CardContent>
-							</Card>
+
+						<div className="mt-auto space-y-2 p-4">
+							<SidebarItem href="/dashboard/configuracoes">
+								<Settings />
+								<span>Configurações</span>
+							</SidebarItem>
+							<SignOut />
 						</div>
 					</SheetContent>
 				</Sheet>
-				<div className="flex h-[59px] items-center gap-2">
-					<Icon className="text-lg opacity-50" />
-					<span>{title}</span>
-				</div>
 			</div>
-			<p>user menu</p>
+			<div className="flex h-[59px] items-center gap-2">
+				<Icon className="text-lg opacity-50" />
+				<span>{title}</span>
+			</div>
 		</div>
 	)
 }

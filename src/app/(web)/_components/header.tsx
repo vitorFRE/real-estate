@@ -113,6 +113,7 @@ export const Header = () => {
 							<DropdownMenuLabel>
 								{session ? `Ola ${session?.user?.name}` : 'Menu'}
 							</DropdownMenuLabel>
+
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Favoritos</DropdownMenuItem>
 							<DropdownMenuItem asChild>
@@ -120,6 +121,18 @@ export const Header = () => {
 									Imóveis
 								</Link>
 							</DropdownMenuItem>
+							{session &&
+								(session.user.role === 'ADMIN' ||
+									session.user.role === 'AGENT') && (
+									<>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<Link className="cursor-pointer" href={'/dashboard'}>
+												Dashboard
+											</Link>
+										</DropdownMenuItem>
+									</>
+								)}
 							<DropdownMenuSeparator />
 							{session ? (
 								<DropdownMenuItem
