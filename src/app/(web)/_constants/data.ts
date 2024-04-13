@@ -1,21 +1,21 @@
 export const feedbackData = [
 	{
 		username: 'João',
-		userAvatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
+		userAvatarUrl: 'https://github.com/vitorFRE.png',
 		feedbackText:
 			'Excelente experiência! O atendimento foi rápido e eficiente, e o produto chegou em perfeitas condições.',
 		rating: 4
 	},
 	{
 		username: 'Maria',
-		userAvatarUrl: 'https://randomuser.me/api/portraits/women/2.jpg',
+		userAvatarUrl: 'https://github.com/vitorFRE.png',
 		feedbackText:
 			'Estou muito satisfeita com a compra. O produto superou minhas expectativas e o vendedor foi muito atencioso.',
 		rating: 5
 	},
 	{
 		username: 'Pedro',
-		userAvatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
+		userAvatarUrl: 'https://github.com/vitorFRE.png',
 		feedbackText:
 			'Recomendo a todos! O produto é de ótima qualidade e a entrega foi muito rápida. Parabéns à equipe!',
 		rating: 5

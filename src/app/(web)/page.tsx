@@ -1,14 +1,17 @@
+import { Button } from '@/components/ui/button'
 import {
 	Carousel,
 	CarouselContent,
 	CarouselItem
 } from '@/components/ui/carousel'
+import { getProperties } from '@/server/querries/get-properties'
 
 import { FeedbackCard, PropertyCard, ServiceCard } from './_components/cards'
 import { Heading } from './_components/heading'
 import { feedbackData, servicesData } from './_constants/data'
 
-const Name = () => {
+const Name = async () => {
+	const properties = await getProperties({ count: 6 })
 	return (
 		<>
 			{/* hero */}
@@ -25,33 +28,46 @@ const Name = () => {
 					description="Confira nossa seleção de imóveis que podem ser perfeitos para você"
 				/>
 
-				<Carousel
-					opts={{
-						align: 'start'
-					}}
-					className="mt-8 w-full md:mt-16"
-				>
-					<CarouselContent>
-						{Array.from({ length: 4 }).map((_, index) => (
-							<CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-								<div className=" p-1">
-									<PropertyCard
-										imgUrl="/hero-img.jpg"
-										type="Apartamento"
-										title="Altas flores"
-										city="Jardim das Flores"
-										state="SP"
-										neighborhood="Jardim das Flores"
-										description="Localizada em uma das informações mais nobres de São Paulo, a Alta flores é uma propriedade incrivel que oferece o melhor em conforto e lazer."
-										bedrooms={3}
-										bathrooms={2}
-										size={100}
-									/>
-								</div>
-							</CarouselItem>
-						))}
-					</CarouselContent>
-				</Carousel>
+				{properties.data ? (
+					<Carousel
+						opts={{
+							align: 'start'
+						}}
+						className="mt-8 w-full md:mt-16"
+					>
+						<CarouselContent>
+							{properties.data.map((property) => (
+								<CarouselItem
+									key={property.id}
+									className="md:basis-1/2 lg:basis-1/3"
+								>
+									<div className=" p-1">
+										<PropertyCard
+											imgUrl={property.images[0].url || '/placeholder.svg'}
+											type={property.locationValue}
+											title={property.title}
+											city={property.city}
+											state={property.state}
+											neighborhood={property.neighborhood}
+											description={property.description}
+											bedrooms={property.bedroomCount}
+											bathrooms={property.bathroomCount}
+											size={property.buildingArea}
+										/>
+									</div>
+								</CarouselItem>
+							))}
+						</CarouselContent>
+					</Carousel>
+				) : (
+					<div className="mt-8 flex w-full flex-col items-center gap-4">
+						<p className="max-w-md text-center text-muted-foreground">
+							<span className="text-foreground">Ops</span>, para quem não temos
+							propriedades disponíveis, tem alguma para vender? Anuncie aqui!
+						</p>
+						<Button>Venda Conosco!</Button>
+					</div>
+				)}
 			</section>
 
 			{/* feedback */}

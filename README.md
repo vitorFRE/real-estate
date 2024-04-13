@@ -29,11 +29,11 @@ This application does not have functionality yet and was created only for the pu
 - [ ] User authentication (signup, login, logout);
   - [x] Signup
   - [x] Login
-  - [ ] Logout
+  - [x] Logout
 - [ ] Add listings to favorites;
 - [ ] Pagination for listings;
 - [ ] Manage property (add, delete, edit);
-  - [ ] Add
+  - [x] Add
   - [ ] Edit
   - [ ] Delete
 - [ ] View statistics and analytics about listings;

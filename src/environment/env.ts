@@ -5,5 +5,8 @@ export const env = {
 	NEXTAUTH_URL: process.env.NEXTAUTH_URL as string,
 	NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET as string,
 	GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID as string,
-	GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET as string
+	GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET as string,
+	NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+	NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env
+		.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
 }
