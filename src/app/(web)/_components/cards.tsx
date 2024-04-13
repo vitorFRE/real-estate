@@ -46,7 +46,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 					<h3 className="text-lg font-semibold">{props.title}</h3>
 					<p className="flex items-center gap-1 text-muted-foreground/80">
 						<MapPin className="text-foreground" /> {props.neighborhood},{' '}
-						{props.city}- {props.state}
+						{props.city} - {props.state}
 					</p>
 				</div>
 				<p className="mt-4  line-clamp-4 text-muted-foreground">

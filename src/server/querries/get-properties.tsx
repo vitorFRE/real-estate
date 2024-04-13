@@ -2,9 +2,16 @@
 
 import { db } from '../db'
 
-export const getProperties = async () => {
+interface IGetproperties {
+	count?: number
+}
+
+export const getProperties = async (params: IGetproperties) => {
+	const count = params.count ?? undefined
+
 	try {
 		const properties = await db.property.findMany({
+			take: count,
 			include: {
 				images: true
 			}

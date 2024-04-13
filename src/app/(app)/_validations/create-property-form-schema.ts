@@ -1,20 +1,35 @@
 import z from 'zod'
 
 export const CreatePropertyDTO = z.object({
-	title: z.string().min(1, {
-		message: 'O titulo deve conter pelo menos um caractere.'
-	}),
+	title: z
+		.string()
+		.min(1, {
+			message: 'O titulo deve conter pelo menos um caractere.'
+		})
+		.max(120, {
+			message: 'O título não pode ter mais de 120 caracteres.'
+		}),
 	locationValue: z.string({
 		required_error: 'Por favor selecione o tipo do imovel.'
 	}),
-	price: z.string().min(1, {
-		message: 'O preço deve conter pelo menos um caractere.'
-	}),
-	description: z.string().min(1, {
-		message: 'A descrição deve conter pelo menos um caractere.'
-	}),
+	price: z
+		.string()
+		.min(1, {
+			message: 'O preço deve conter pelo menos um caractere.'
+		})
+		.max(20, {
+			message: 'O preço não pode ter mais de 20 caracteres.'
+		}),
+	description: z
+		.string()
+		.min(1, {
+			message: 'A descrição deve conter pelo menos um caractere.'
+		})
+		.max(600, {
+			message: 'A descrição não pode ter mais de 600 caracteres.'
+		}),
 	bedroomCount: z
-		.number()
+		.number({ invalid_type_error: 'Deve ser preenchido' })
 		.min(1, {
 			message: 'O número de quartos deve conter pelo menos um caractere.'
 		})
@@ -22,19 +37,29 @@ export const CreatePropertyDTO = z.object({
 			message: 'O número de quartos não pode ser maior que 30.'
 		}),
 	bathroomCount: z
-		.number()
+		.number({ invalid_type_error: 'Deve ser preenchido' })
 		.min(1, {
 			message: 'O número de banheiros deve conter pelo menos um caractere.'
 		})
 		.max(20, {
 			message: 'O número de banheiros não pode ser maior que 20.'
 		}),
-	city: z.string().min(2, {
-		message: 'A cidade deve conter pelo menos dois caractere.'
-	}),
-	neighborhood: z.string().min(2, {
-		message: 'O bairro deve conter pelo menos dois caractere.'
-	}),
+	city: z
+		.string()
+		.min(2, {
+			message: 'A cidade deve conter pelo menos dois caractere.'
+		})
+		.max(50, {
+			message: 'A cidade não pode ter mais de 50 caracteres.'
+		}),
+	neighborhood: z
+		.string()
+		.min(2, {
+			message: 'O bairro deve conter pelo menos dois caractere.'
+		})
+		.max(60, {
+			message: 'O bairro não pode ter mais de 100 caracteres.'
+		}),
 	state: z
 		.string()
 		.min(2, {

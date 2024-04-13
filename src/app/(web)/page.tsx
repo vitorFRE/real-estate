@@ -11,7 +11,7 @@ import { Heading } from './_components/heading'
 import { feedbackData, servicesData } from './_constants/data'
 
 const Name = async () => {
-	const properties = await getProperties()
+	const properties = await getProperties({ count: 6 })
 	return (
 		<>
 			{/* hero */}

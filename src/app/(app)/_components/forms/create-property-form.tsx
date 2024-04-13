@@ -3,7 +3,7 @@
 import React from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowUpIcon, Building, Building2, Home } from 'lucide-react'
+import { Building, Building2, FileUp, Home } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Dropzone from 'react-dropzone'
 import { Controller, useForm } from 'react-hook-form'
@@ -239,7 +239,11 @@ export const CreatepropertyForm = () => {
 						id="state"
 						type="text"
 						placeholder="SP"
-						{...register('state')}
+						maxLength={2}
+						{...register('state', {
+							setValueAs: (value: string) => value.toUpperCase(), // Converte o valor para maiúsculas
+							pattern: /^[A-Z]*$/ // Garante que apenas letras maiúsculas sejam permitidas
+						})}
 					/>
 					{errors.state && (
 						<span className="text-red-500">{errors.state.message}</span>
@@ -294,7 +298,7 @@ export const CreatepropertyForm = () => {
 									>
 										<input {...getInputProps()} />
 										<div className="flex flex-col items-center justify-center gap-4">
-											<ArrowUpIcon className="h-5 w-5 fill-current" />
+											<FileUp className="h-5 w-5" />
 											{isDragActive ? (
 												<p>Arraste os arquivos aqui...</p>
 											) : (
