@@ -16,11 +16,11 @@ export const ServicesSection = () => {
 				opts={{
 					align: 'start'
 				}}
-				className="mt-8w-full md:mt-16"
+				className="mt-8 w-full md:mt-16"
 			>
 				<CarouselContent>
 					{servicesData.map((data, index) => (
-						<CarouselItem key={index} className=" md:basis-1/2 lg:basis-1/3">
+						<CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
 							<div className="h-full p-1">
 								<ServiceCard
 									description={data.description}
