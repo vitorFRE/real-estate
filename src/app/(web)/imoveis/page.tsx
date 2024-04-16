@@ -7,6 +7,7 @@ import ListingsFilter from '../_components/listings-filter'
 
 const ImoveisPage = async () => {
 	const properties = await getProperties({})
+
 	return (
 		<section>
 			<div className="relative h-[206px] bg-hero bg-cover bg-center">
@@ -27,6 +28,7 @@ const ImoveisPage = async () => {
 						{properties.data.map((property) => (
 							<PropertyCard
 								key={property.id}
+								id={property.id}
 								imgUrl={property.images[0].url || '/placeholder.svg'}
 								type={property.locationValue}
 								title={property.title}

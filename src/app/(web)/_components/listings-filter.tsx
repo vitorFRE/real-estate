@@ -2,7 +2,6 @@
 
 import { ChevronDown, FilterIcon } from 'lucide-react'
 
-import { InputCounter } from '@/components/form/input-counter'
 import { FormInputMask } from '@/components/form/input-mask'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -98,26 +97,6 @@ const ListingsFilter = () => {
 									<label htmlFor="condo" className="text-sm font-medium">
 										Condomínio
 									</label>
-								</div>
-							</div>
-						</CollapsibleContent>
-					</Collapsible>
-					<Collapsible>
-						<CollapsibleTrigger asChild>
-							<Button
-								className="flex w-full items-center justify-between"
-								variant="ghost"
-							>
-								Características do Imóvel
-								<ChevronDown className="ml-auto h-4 w-4" />
-							</Button>
-						</CollapsibleTrigger>
-						<CollapsibleContent>
-							<div className="mt-2 flex flex-col gap-4">
-								<div>
-									<InputCounter />
-									<DropdownMenuSeparator />
-									<InputCounter />
 								</div>
 							</div>
 						</CollapsibleContent>

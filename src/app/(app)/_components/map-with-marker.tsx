@@ -57,7 +57,7 @@ const MapWithMarker: React.FC<MapWithMarkerProps> = ({
 			center={[mapCenter.lat, mapCenter.lng]}
 			zoom={14}
 			scrollWheelZoom={true}
-			className=" h-[35vh] rounded-lg"
+			className="h-[35vh] rounded-lg"
 		>
 			<MapEvents />
 			<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

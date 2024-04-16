@@ -20,13 +20,13 @@ This application does not have functionality yet and was created only for the pu
   - [x] Services
 - [x] Listings page;
 - [ ] Favorites page;
-- [ ] Listing page;
+- [x] Listing page;
 - [ ] Contact page;
 - [ ] Dashboard pages;
 
 **Functions**
 
-- [ ] User authentication (signup, login, logout);
+- [x] User authentication (signup, login, logout);
   - [x] Signup
   - [x] Login
   - [x] Logout
