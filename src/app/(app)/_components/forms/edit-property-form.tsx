@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Media, Property } from '@prisma/client'
 import { Building, Building2, FileUp, Home } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Dropzone from 'react-dropzone'
@@ -18,15 +19,24 @@ import {
 } from '@/components/form/form'
 import { FormInputMask } from '@/components/form/input-mask'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { useCreateProperty } from '@/hooks/use-create-property'
+import { Switch } from '@/components/ui/switch'
+import { useEditProperty } from '@/hooks/use-edit-property'
 
 import {
-	CreatePropertyData,
-	CreatePropertyDTO
-} from '../../_validations/create-property-form-schema'
+	EditPropertyData,
+	EditPropertyDTO
+} from '../../_validations/edit-property-form-schema'
 import { LocationPicker } from '../location-picker'
 
-export const CreatepropertyForm = () => {
+interface PropertyWithMedia extends Property {
+	images: Media[]
+}
+
+interface EditPropertyFormProps {
+	property: PropertyWithMedia
+}
+
+export const EditPropertyForm = ({ property }: EditPropertyFormProps) => {
 	const { data: session } = useSession()
 
 	const {
@@ -38,14 +48,35 @@ export const CreatepropertyForm = () => {
 		setValue,
 		watch,
 		formState: { errors }
-	} = useForm<CreatePropertyData>({
-		resolver: zodResolver(CreatePropertyDTO)
+	} = useForm<EditPropertyData>({
+		resolver: zodResolver(EditPropertyDTO),
+		defaultValues: {
+			title: property.title,
+			area: property.area,
+			bathroomCount: property.bathroomCount,
+			bedroomCount: property.bedroomCount,
+			buildingArea: property.buildingArea,
+			city: property.city,
+			description: property.description,
+			latitude: property.latitude,
+			longitude: property.longitude,
+			locationValue: property.locationValue,
+			neighborhood: property.neighborhood,
+			state: property.state,
+			price: property.price,
+			media: null,
+			visibility: property.visibility
+		}
 	})
 
-	const { create: createProperty, isLoading } = useCreateProperty()
+	const { edit: editProperty, isLoading } = useEditProperty()
 
-	const onSubmit = async (data: CreatePropertyData) => {
-		await createProperty({ data, userId: session?.user.id as string })
+	const onSubmit = async (data: EditPropertyData) => {
+		await editProperty({
+			data,
+			userId: session?.user.id as string,
+			propertyId: property.id
+		})
 		reset()
 	}
 
@@ -54,6 +85,29 @@ export const CreatepropertyForm = () => {
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
 			<div className="flex flex-col gap-6">
+				<Controller
+					control={control}
+					name="visibility"
+					render={({ field }) => {
+						return (
+							<FormGroup className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+								<div className="flex flex-col gap-0.5">
+									<FormLabel>Visibilidade da Propriedade</FormLabel>
+									<p className="text-sm text-muted-foreground">
+										Marque esta opção para tornar a propriedade visível para os
+										usuários.
+									</p>
+								</div>
+								<Switch
+									checked={field.value}
+									onCheckedChange={field.onChange}
+									aria-readonly
+								/>
+							</FormGroup>
+						)
+					}}
+				></Controller>
+
 				<Controller
 					control={control}
 					name="locationValue"
@@ -129,7 +183,10 @@ export const CreatepropertyForm = () => {
 							setValue('latitude', lat)
 							setValue('longitude', lng)
 						}}
-						initialLocation={null}
+						initialLocation={{
+							lat: property.latitude,
+							lng: property.longitude
+						}}
 					/>
 					{errors.latitude && errors.longitude && (
 						<span className="text-red-500">{errors.latitude.message}</span>
@@ -240,8 +297,8 @@ export const CreatepropertyForm = () => {
 						placeholder="SP"
 						maxLength={2}
 						{...register('state', {
-							setValueAs: (value: string) => value.toUpperCase(), // Converte o valor para maiúsculas
-							pattern: /^[A-Z]*$/ // Garante que apenas letras maiúsculas sejam permitidas
+							setValueAs: (value: string) => value.toUpperCase(),
+							pattern: /^[A-Z]*$/
 						})}
 					/>
 					{errors.state && (
@@ -324,6 +381,17 @@ export const CreatepropertyForm = () => {
 												/>
 											</picture>
 										))}
+
+										{!watchMedia &&
+											property.images.map((image, index) => (
+												<picture key={index}>
+													<img
+														src={image.url || ''}
+														alt={`Image ${index}`}
+														className="h-24 w-full rounded-md object-cover"
+													/>
+												</picture>
+											))}
 									</div>
 								</div>
 							)}
@@ -332,8 +400,8 @@ export const CreatepropertyForm = () => {
 				/>
 			</div>
 			<FormGroup className="mt-6">
-				<FormButton disabled={isLoading} type="submit" className="w-full">
-					{isLoading ? 'Criando...' : 'Criar'}
+				<FormButton type="submit" className="w-full">
+					{isLoading ? 'Editando...' : 'Editar'}
 				</FormButton>
 			</FormGroup>
 		</Form>

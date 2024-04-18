@@ -28,7 +28,7 @@ const uploadToStorage = async ({
 	return { data }
 }
 
-const deleteFromStorage = async ({ path }: { path: string }) => {
+export const deleteFromStorage = async ({ path }: { path: string }) => {
 	await supabase.storage.from('real-estate').remove([path])
 }
 

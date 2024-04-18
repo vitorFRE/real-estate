@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { getSession } from '../auth'
 import { db } from '../db'
 
@@ -67,6 +69,8 @@ export const createProperty = async (props: ICreateProperty) => {
 				images: true
 			}
 		})
+
+		revalidatePath('/dashboard/propriedades', 'page')
 
 		return {
 			status: 'success',

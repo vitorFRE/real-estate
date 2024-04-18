@@ -83,6 +83,7 @@ model Property {
   updatedAt     DateTime @updatedAt
   latitude      Float
   longitude     Float
+  visibility    Boolean  @default(true)
 
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
