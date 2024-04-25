@@ -6,10 +6,13 @@ import {
 	EditPropertyData,
 	EditPropertyDTO
 } from '@/app/(app)/_validations/edit-property-form-schema'
-import { deleteFromStorage, uploadImage } from '@/lib/supabase'
 import { validateMediaFiles } from '@/lib/utils'
 import { ICreateMedia } from '@/server/mutation/create-property'
 import { editProperty } from '@/server/mutation/edit-property'
+import {
+	deleteImageFromSupabase,
+	uploadFiles
+} from '@/server/mutation/file-upload'
 import { getPropertyById } from '@/server/querries/get-property-by-id'
 
 export const useEditProperty = () => {
@@ -82,38 +85,31 @@ export const useEditProperty = () => {
 
 			const deletePromises = currentProperty.data?.images.map(async (media) => {
 				if (media.path) {
-					await deleteFromStorage({ path: media.path })
+					await deleteImageFromSupabase(media.path)
 				}
 			})
 
 			await Promise.all(deletePromises ?? [])
 
-			const filesArray = Array.from(data.media)
-
-			const uploadPromises = filesArray.map(async (file) => {
-				const resultUpload = await uploadImage({
-					file,
-					folder: 'properties',
-					userId
-				})
-
-				if (resultUpload && resultUpload.error) {
-					toast.error(resultUpload.error)
-					console.log(resultUpload.error)
-					return null
-				}
-
-				return {
-					path: resultUpload.path,
-					url: resultUpload.publicUrl
-				}
+			const formData = new FormData()
+			Array.from(data.media ?? []).forEach((file) => {
+				formData.append(`file`, file)
 			})
 
-			const resultsUpload = await Promise.all(uploadPromises)
+			const resultUploads = await uploadFiles(formData, 'properties', userId)
 
-			const filteredUploads = resultsUpload.filter(
-				(upload) => upload !== null
-			) as ICreateMedia[]
+			if (!resultUploads || resultUploads.status !== 'success') {
+				toast.error('Erro ao fazer upload dos arquivos')
+				setIsLoading(false)
+				return { status: 'error', message: 'Erro ao fazer upload dos arquivos' }
+			}
+
+			const mediaFiles: ICreateMedia[] = resultUploads.files
+				? resultUploads.files.map((file) => ({
+						path: file.path ?? '',
+						publicUrl: file.publicUrl || ''
+					}))
+				: []
 
 			const result = await editProperty({
 				id: propertyId,
@@ -130,7 +126,7 @@ export const useEditProperty = () => {
 				state: data.state,
 				neighborhood: data.neighborhood,
 				title: data.title,
-				media: filteredUploads,
+				media: mediaFiles,
 				visibility: data.visibility
 			})
 

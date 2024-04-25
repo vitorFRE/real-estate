@@ -6,9 +6,7 @@ import { getSession } from '../auth'
 import { db } from '../db'
 
 export interface ICreateMedia {
-	url: {
-		publicUrl: string
-	}
+	publicUrl: string
 	path: string
 }
 
@@ -71,7 +69,7 @@ export const editProperty = async (props: IEditProperty) => {
 		if (props.media && props.media.length > 0) {
 			updateData.images = {
 				create: props.media.map((media) => ({
-					url: media.url.publicUrl,
+					url: media.publicUrl,
 					path: media.path
 				})),
 				deleteMany: {

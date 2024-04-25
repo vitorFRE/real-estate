@@ -6,9 +6,9 @@ import {
 	CreatePropertyData,
 	CreatePropertyDTO
 } from '@/app/(app)/_validations/create-property-form-schema'
-import { uploadImage } from '@/lib/supabase'
 import { validateMediaFiles } from '@/lib/utils'
 import { createProperty, ICreateMedia } from '@/server/mutation/create-property'
+import { uploadFiles } from '@/server/mutation/file-upload'
 
 export const useCreateProperty = () => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +20,6 @@ export const useCreateProperty = () => {
 
 	const create = async ({ data, userId }: ICreate) => {
 		setIsLoading(true)
-		let resultsUpload = []
 
 		try {
 			const parsedData = CreatePropertyDTO.safeParse(data)
@@ -39,32 +38,25 @@ export const useCreateProperty = () => {
 				return
 			}
 
-			const filesArray = Array.from(data.media)
-
-			const uploadPromises = filesArray.map(async (file) => {
-				const resultUpload = await uploadImage({
-					file,
-					folder: 'properties',
-					userId
-				})
-
-				if (resultUpload && resultUpload.error) {
-					toast.error(resultUpload.error)
-					console.log(resultUpload.error)
-					return
-				}
-
-				return {
-					path: resultUpload.path,
-					url: resultUpload.publicUrl
-				}
+			const formData = new FormData()
+			Array.from(data.media ?? []).forEach((file) => {
+				formData.append(`file`, file)
 			})
 
-			resultsUpload = await Promise.all(uploadPromises)
+			const resultUploads = await uploadFiles(formData, 'properties', userId)
 
-			const filteredUploads = resultsUpload.filter(
-				(upload) => upload !== undefined
-			) as ICreateMedia[]
+			if (!resultUploads || resultUploads.status !== 'success') {
+				toast.error('Erro ao fazer upload dos arquivos')
+				setIsLoading(false)
+				return { status: 'error', message: 'Erro ao fazer upload dos arquivos' }
+			}
+
+			const mediaFiles: ICreateMedia[] = resultUploads.files
+				? resultUploads.files.map((file) => ({
+						path: file.path ?? '',
+						publicUrl: file.publicUrl || ''
+					}))
+				: []
 
 			const result = await createProperty({
 				area: data.area,
@@ -80,7 +72,7 @@ export const useCreateProperty = () => {
 				state: data.state,
 				neighborhood: data.neighborhood,
 				title: data.title,
-				media: filteredUploads
+				media: mediaFiles
 			})
 
 			if (result.status === 'success') {

@@ -4,7 +4,7 @@ This app is built with Next.js 14, Postgresql, Tailwind, shadcn/ui, AuthJS and R
 
 ## ⚠️ Under development
 
-This application does not have functionality yet and was created only for the purpose of studies.
+This app is created for study purposes only.
 
 ---
 
