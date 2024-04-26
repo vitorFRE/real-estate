@@ -21,9 +21,9 @@ const Name = async () => {
 		<>
 			<DashboardHeader title="Propriedades" icon={Building2} />
 			<div className="mt-8 px-4 pb-12 pt-8 lg:mt-0">
-				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-					{properties &&
-						properties.data?.map((item) => (
+				{properties.data ? (
+					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+						{properties.data?.map((item) => (
 							<DetailsPropertyCard
 								id={item.id}
 								imageUrl={item.images[0].url || ''}
@@ -36,7 +36,15 @@ const Name = async () => {
 								status={item.visibility}
 							/>
 						))}
-				</div>
+					</div>
+				) : (
+					<div className="mt-8 flex w-full flex-col items-center gap-4">
+						<p className="max-w-md text-center text-muted-foreground">
+							<span className="text-foreground">Ops</span>, parece que não temos
+							propriedades disponíveis!
+						</p>
+					</div>
+				)}
 			</div>
 		</>
 	)

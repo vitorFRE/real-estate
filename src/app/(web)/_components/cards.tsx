@@ -27,9 +27,11 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
+import { useDeleteProperty } from '@/hooks/use-delete-property'
 
 interface PropertyCardProps {
 	imgUrl: string
@@ -194,6 +196,12 @@ interface DetailsPropertyCardProps {
 }
 
 export const DetailsPropertyCard = (props: DetailsPropertyCardProps) => {
+	const { onDelete, isLoading } = useDeleteProperty()
+
+	const deleteProperty = async (propertyId: string) => {
+		await onDelete(propertyId)
+	}
+
 	return (
 		<Card>
 			<CardHeader>
@@ -232,6 +240,13 @@ export const DetailsPropertyCard = (props: DetailsPropertyCardProps) => {
 								>
 									Editar
 								</Link>
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem
+								className="cursor-pointer text-red-500"
+								onClick={() => deleteProperty(props.id)}
+							>
+								{isLoading ? 'Deletando' : 'Deletar'}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

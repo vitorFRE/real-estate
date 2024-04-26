@@ -45,7 +45,7 @@ const ImoveisPage = async () => {
 				) : (
 					<div className="mt-8 flex w-full flex-col items-center gap-4">
 						<p className="max-w-md text-center text-muted-foreground">
-							<span className="text-foreground">Ops</span>, para quem não temos
+							<span className="text-foreground">Ops</span>, parece que não temos
 							propriedades disponíveis, tem alguma para vender? Anuncie aqui!
 						</p>
 						<Button>Venda Conosco!</Button>

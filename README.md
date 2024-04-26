@@ -32,10 +32,10 @@ This app is created for study purposes only.
   - [x] Logout
 - [ ] Add listings to favorites;
 - [ ] Pagination for listings;
-- [ ] Manage property (add, delete, edit);
+- [x] Manage property (add, delete, edit);
   - [x] Add
-  - [ ] Edit
-  - [ ] Delete
+  - [x] Edit
+  - [x] Delete
 - [ ] View statistics and analytics about listings;
 
 **ToDo**
