@@ -39,6 +39,7 @@ const ImoveisPage = async () => {
 								bedrooms={property.bedroomCount}
 								bathrooms={property.bathroomCount}
 								size={property.buildingArea}
+								isNew={property.createdAt}
 							/>
 						))}
 					</div>

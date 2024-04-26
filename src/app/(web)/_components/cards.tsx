@@ -3,6 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 import {
 	BedDouble,
 	LandPlot,
@@ -45,9 +48,20 @@ interface PropertyCardProps {
 	bathrooms: number
 	size: string
 	id: string
+	isNew: Date
 }
 
 export const PropertyCard = (props: PropertyCardProps) => {
+	dayjs.extend(utc)
+	dayjs.extend(relativeTime)
+	dayjs.locale('pt-br')
+
+	const dateNow = dayjs(new Date())
+
+	const diffDateDays = dateNow.diff(props.isNew, 'day')
+
+	console.log(diffDateDays)
+
 	return (
 		<Card>
 			<Link href={`/imoveis/${props.id}`}>
@@ -58,6 +72,9 @@ export const PropertyCard = (props: PropertyCardProps) => {
 						fill
 						src={props.imgUrl}
 					/>
+					{diffDateDays <= 15 && (
+						<Badge className="absolute left-2 top-0">Novidade</Badge>
+					)}
 				</CardHeader>
 				<CardContent>
 					<div className="mt-4 flex flex-col gap-2">
