@@ -6,7 +6,7 @@ import { Heading } from '../_components/heading'
 import ListingsFilter from '../_components/listings-filter'
 
 const ImoveisPage = async () => {
-	const properties = await getProperties({})
+	const properties = await getProperties({ visible: true })
 
 	return (
 		<section>

@@ -12,7 +12,7 @@ import { ServicesSection } from './_components/sections/services-section'
 import { feedbackData } from './_constants/data'
 
 const Name = async () => {
-	const properties = await getProperties({ count: 6 })
+	const properties = await getProperties({ count: 3, visible: true })
 	return (
 		<>
 			{/* hero */}
