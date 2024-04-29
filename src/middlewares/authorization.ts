@@ -13,7 +13,7 @@ export const authorizationMiddleware = async (request: NextRequest) => {
 	})
 
 	if (token && pathname === '/login') {
-		return NextResponse.redirect(new URL('/dashboard', request.url))
+		return NextResponse.redirect(new URL('/', request.url))
 	}
 
 	if (
@@ -26,6 +26,10 @@ export const authorizationMiddleware = async (request: NextRequest) => {
 
 	if (!token && pathname.startsWith('/dashboard')) {
 		return NextResponse.redirect(new URL('/', request.url))
+	}
+
+	if (!token && pathname.startsWith('/favoritos')) {
+		return NextResponse.redirect(new URL('/login', request.url))
 	}
 
 	console.log(`[Authorization Middleware] Log from [Path] ${pathname}`)

@@ -18,7 +18,6 @@ export const SocialLogins = () => {
 		} catch (error) {
 			toast.error('Ocorreu um erro, tente novamente mais tarde!')
 		} finally {
-			toast.success('Logado')
 			setIsLoading(false)
 		}
 	}
@@ -32,7 +31,7 @@ export const SocialLogins = () => {
 				disabled={isLoading}
 			>
 				<Icons.github className="h-3.5 w-3.5 fill-foreground" />
-				<span>Continue com Github</span>
+				<span>{isLoading ? 'Entrando...' : 'Continue com Github'}</span>
 			</Button>
 		</div>
 	)

@@ -19,7 +19,6 @@ export const useDeleteProperty = () => {
 				toast.error(result?.message)
 			}
 		} catch (error) {
-			console.log(error)
 			return {
 				status: 'error',
 				message: `${error}`

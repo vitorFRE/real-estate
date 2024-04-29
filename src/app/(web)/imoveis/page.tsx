@@ -9,7 +9,7 @@ const ImoveisPage = async () => {
 	const properties = await getProperties({ visible: true })
 
 	return (
-		<section>
+		<main>
 			<div className="relative h-[206px] bg-hero bg-cover bg-center">
 				<div className="absolute inset-0 bg-black opacity-5 dark:opacity-80" />
 			</div>
@@ -53,7 +53,7 @@ const ImoveisPage = async () => {
 					</div>
 				)}
 			</section>
-		</section>
+		</main>
 	)
 }
 

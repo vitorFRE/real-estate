@@ -22,7 +22,11 @@ import { cn } from '@/lib/utils'
 import { FavoritesHeartCount } from './favorite-hearts-count'
 import { NavItem } from './nav-link'
 
-export const Header = () => {
+interface HeaderProps {
+	favoritesCount: number
+}
+
+export const Header = ({ favoritesCount }: HeaderProps) => {
 	const [scrolledFromTop, setScrolledFromTop] = useState(false)
 	const { data: session } = useSession()
 	const pathname = usePathname()
@@ -98,7 +102,7 @@ export const Header = () => {
 				</nav>
 
 				<div className="flex items-center gap-2">
-					<FavoritesHeartCount />
+					<FavoritesHeartCount favoritesCount={favoritesCount} />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button
@@ -115,7 +119,12 @@ export const Header = () => {
 							</DropdownMenuLabel>
 
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Favoritos</DropdownMenuItem>
+
+							<DropdownMenuItem asChild>
+								<Link className="cursor-pointer" href={'/favoritos'}>
+									Favoritos
+								</Link>
+							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
 								<Link className="cursor-pointer" href={'/imoveis'}>
 									Imóveis

@@ -41,15 +41,17 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  role          Role       @default(USER)
-  properties    Property[]
+  role          Role      @default(USER)
+
+  properties Property[]
+  favorites  Favorite[]
 }
 
 model VerificationToken {
@@ -88,9 +90,23 @@ model Property {
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
 
-  images Media[]
+  images    Media[]
+  favorites Favorite[]
 
   @@index([ownerId])
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  Property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId String?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@unique([userId, propertyId])
+  @@index([propertyId])
 }
 
 model Media {

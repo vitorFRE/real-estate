@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 
 import dayjs from 'dayjs'
@@ -15,6 +14,7 @@ import {
 	Star
 } from 'lucide-react'
 
+import { FavoriteButton } from '@/components/favorite-button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -57,53 +57,59 @@ export const PropertyCard = (props: PropertyCardProps) => {
 	dayjs.locale('pt-br')
 
 	const dateNow = dayjs(new Date())
-
 	const diffDateDays = dateNow.diff(props.isNew, 'day')
-
-	console.log(diffDateDays)
 
 	return (
 		<Card>
-			<Link href={`/imoveis/${props.id}`}>
-				<CardHeader className="relative h-[220px]">
-					<Image
-						alt="s"
-						className="rounded-t-lg object-cover"
-						fill
-						src={props.imgUrl}
-					/>
-					{diffDateDays <= 15 && (
-						<Badge className="absolute left-2 top-0">Novidade</Badge>
-					)}
-				</CardHeader>
-				<CardContent>
-					<div className="mt-4 flex flex-col gap-2">
-						<span className="text-xs font-medium text-muted-foreground ">
-							{props.type}
-						</span>
-						<h3 className="text-lg font-semibold">{props.title}</h3>
-						<p className="flex items-center gap-1 text-muted-foreground/80">
-							<MapPin className="text-foreground" /> {props.neighborhood},{' '}
-							{props.city} - {props.state}
-						</p>
-					</div>
-					<p className="mt-4 line-clamp-4 h-[96px] text-muted-foreground">
-						{props.description}
+			<CardHeader className="relative h-[220px]">
+				<Link
+					href={`/imoveis/${props.id}`}
+					className="absolute left-0 right-0 top-0  overflow-hidden"
+				>
+					<picture className="h-full w-full rounded-t-lg">
+						<img
+							className="h-[220px] w-full rounded-t-lg object-cover transition-all duration-300 hover:scale-105"
+							src={props.imgUrl}
+							alt={`Imagem da casa ${props.title}`}
+						/>
+					</picture>
+				</Link>
+
+				<FavoriteButton
+					propertyId={props.id}
+					className="absolute right-2 top-0"
+				/>
+				{diffDateDays <= 15 && (
+					<Badge className="absolute left-2 top-0">Novidade</Badge>
+				)}
+			</CardHeader>
+			<CardContent>
+				<div className="mt-4 flex flex-col gap-2">
+					<span className="text-xs font-medium text-muted-foreground ">
+						{props.type}
+					</span>
+					<h3 className="text-lg font-semibold">{props.title}</h3>
+					<p className="flex items-center gap-1 text-muted-foreground/80">
+						<MapPin className="text-foreground" /> {props.neighborhood},{' '}
+						{props.city} - {props.state}
 					</p>
-				</CardContent>
-				<CardFooter className="flex items-center gap-4">
-					<span className="flex items-center gap-2 text-foreground/70">
-						<BedDouble className="text-foreground" /> {props.bedrooms}
-					</span>
-					<span className="flex items-center gap-2 text-foreground/70">
-						<ShowerHead className="text-foreground" /> {props.bathrooms}
-					</span>
-					<span className="flex items-center gap-2 text-foreground/70">
-						<LandPlot className="text-foreground" />
-						{props.size}
-					</span>
-				</CardFooter>
-			</Link>
+				</div>
+				<p className="mt-4 line-clamp-4 h-[96px] text-muted-foreground">
+					{props.description}
+				</p>
+			</CardContent>
+			<CardFooter className="flex items-center gap-4">
+				<span className="flex items-center gap-2 text-foreground/70">
+					<BedDouble className="text-foreground" /> {props.bedrooms}
+				</span>
+				<span className="flex items-center gap-2 text-foreground/70">
+					<ShowerHead className="text-foreground" /> {props.bathrooms}
+				</span>
+				<span className="flex items-center gap-2 text-foreground/70">
+					<LandPlot className="text-foreground" />
+					{props.size}
+				</span>
+			</CardFooter>
 		</Card>
 	)
 }
