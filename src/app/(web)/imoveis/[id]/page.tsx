@@ -34,8 +34,10 @@ const Name = async ({ params }: { params: { id: string } }) => {
 						{property.data?.title}
 					</h1>
 					<p className="mb-6 text-2xl font-medium text-primary">
-						<span className="text-foreground">R$ </span>
-						{property.data.price}
+						{new Intl.NumberFormat('pt-br', {
+							style: 'currency',
+							currency: 'BRL'
+						}).format(property.data.price / 100)}
 					</p>
 					<ImageCarousel images={property.data.images} />
 

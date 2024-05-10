@@ -46,7 +46,7 @@ interface PropertyCardProps {
 	description: string
 	bedrooms: number
 	bathrooms: number
-	size: string
+	size: number
 	id: string
 	isNew: Date
 }
@@ -179,7 +179,7 @@ export const ServiceCard = ({ description, title }: ServiceCardProps) => {
 interface MinimalPropertyCardProps {
 	title: string
 	description: string
-	price: string
+	price: number
 	imageUrl: string
 	id: string
 }
@@ -201,7 +201,12 @@ export const MinimalPropertyCard = (props: MinimalPropertyCardProps) => {
 				<p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
 					{props.description}
 				</p>
-				<span className="text-sm font-medium text-primary">{props.price}</span>
+				<span className="text-sm font-medium text-primary">
+					{new Intl.NumberFormat('pt-br', {
+						style: 'currency',
+						currency: 'BRL'
+					}).format(props.price / 100)}
+				</span>
 			</div>
 		</div>
 	)
@@ -212,7 +217,7 @@ interface DetailsPropertyCardProps {
 	imageUrl: string
 	title: string
 	type: string
-	price: string
+	price: number
 	createdAt: string
 	updatedAt: string
 	status?: boolean
@@ -289,7 +294,12 @@ export const DetailsPropertyCard = (props: DetailsPropertyCardProps) => {
 					</div>
 					<div className="flex flex-col gap-1 text-sm text-muted-foreground">
 						Preço
-						<span className="text-base text-foreground">{props.price}</span>
+						<span className="text-base text-foreground">
+							{new Intl.NumberFormat('pt-br', {
+								style: 'currency',
+								currency: 'BRL'
+							}).format(props.price / 100)}
+						</span>
 					</div>
 					<div className="flex flex-col gap-1 text-sm text-muted-foreground">
 						Criado em

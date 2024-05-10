@@ -72,9 +72,9 @@ model Property {
   id            String   @id @default(cuid())
   title         String
   description   String   @db.VarChar(600)
-  price         String
-  area          String
-  buildingArea  String
+  price         Float
+  area          Float
+  buildingArea  Float
   bedroomCount  Int
   bathroomCount Int
   city          String

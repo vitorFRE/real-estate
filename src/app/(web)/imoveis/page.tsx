@@ -5,8 +5,20 @@ import { PropertyCard } from '../_components/cards'
 import { Heading } from '../_components/heading'
 import ListingsFilter from '../_components/listings-filter'
 
-const ImoveisPage = async () => {
-	const properties = await getProperties({ visible: true })
+export interface ISearchParams {
+	type?: string
+	areaMin?: string
+	areaMax?: string
+	moneyMin?: string
+	moneyMax?: string
+}
+
+const ImoveisPage = async ({
+	searchParams
+}: {
+	searchParams: ISearchParams
+}) => {
+	const properties = await getProperties({ visible: true, ...searchParams })
 
 	return (
 		<main>

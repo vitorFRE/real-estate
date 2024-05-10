@@ -6,7 +6,7 @@ import {
 	CreatePropertyData,
 	CreatePropertyDTO
 } from '@/app/(app)/_validations/create-property-form-schema'
-import { validateMediaFiles } from '@/lib/utils'
+import { removeNonNumericChars, validateMediaFiles } from '@/lib/utils'
 import { createProperty, ICreateMedia } from '@/server/mutation/create-property'
 import { uploadFiles } from '@/server/mutation/file-upload'
 
@@ -68,7 +68,7 @@ export const useCreateProperty = () => {
 				locationValue: data.locationValue,
 				latitude: data.latitude,
 				longitude: data.longitude,
-				price: data.price,
+				price: removeNonNumericChars(data.price),
 				state: data.state,
 				neighborhood: data.neighborhood,
 				title: data.title,

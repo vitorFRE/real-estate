@@ -14,15 +14,15 @@ interface IEditProperty {
 	id: string
 	title: string
 	description: string
-	price: string
+	price: number
 	locationValue: string
 	bedroomCount: number
 	bathroomCount: number
 	city: string
 	state: string
 	neighborhood: string
-	area: string
-	buildingArea: string
+	area: number
+	buildingArea: number
 	latitude: number
 	longitude: number
 	visibility: boolean

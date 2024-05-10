@@ -6,7 +6,7 @@ import {
 	EditPropertyData,
 	EditPropertyDTO
 } from '@/app/(app)/_validations/edit-property-form-schema'
-import { validateMediaFiles } from '@/lib/utils'
+import { removeNonNumericChars, validateMediaFiles } from '@/lib/utils'
 import { ICreateMedia } from '@/server/mutation/create-property'
 import { editProperty } from '@/server/mutation/edit-property'
 import {
@@ -47,16 +47,16 @@ export const useEditProperty = () => {
 			if (!data.media) {
 				const result = await editProperty({
 					id: propertyId,
-					area: data.area,
+					area: parseFloat(removeNonNumericChars(data.area)),
 					bedroomCount: data.bedroomCount,
 					bathroomCount: data.bathroomCount,
-					buildingArea: data.buildingArea,
+					buildingArea: parseFloat(removeNonNumericChars(data.buildingArea)),
 					city: data.city,
 					description: data.description,
 					locationValue: data.locationValue,
 					latitude: data.latitude,
 					longitude: data.longitude,
-					price: data.price,
+					price: parseFloat(removeNonNumericChars(data.price)),
 					state: data.state,
 					neighborhood: data.neighborhood,
 					title: data.title,
@@ -113,16 +113,16 @@ export const useEditProperty = () => {
 
 			const result = await editProperty({
 				id: propertyId,
-				area: data.area,
+				area: parseFloat(removeNonNumericChars(data.area)),
 				bedroomCount: data.bedroomCount,
 				bathroomCount: data.bathroomCount,
-				buildingArea: data.buildingArea,
+				buildingArea: parseFloat(removeNonNumericChars(data.buildingArea)),
 				city: data.city,
 				description: data.description,
 				locationValue: data.locationValue,
 				latitude: data.latitude,
 				longitude: data.longitude,
-				price: data.price,
+				price: parseFloat(removeNonNumericChars(data.price)),
 				state: data.state,
 				neighborhood: data.neighborhood,
 				title: data.title,

@@ -13,6 +13,7 @@ import { feedbackData } from './_constants/data'
 
 const Name = async () => {
 	const properties = await getProperties({ count: 3, visible: true })
+
 	return (
 		<>
 			{/* hero */}

@@ -5,6 +5,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
+export const removeNonNumericChars = (value: string) => {
+	return value.replace(/\D/g, '')
+}
+
 // unique image validate
 export const ensureCorrectImageSize = (file: File) => {
 	if (file.size / 1024 / 1024 > 10) {
@@ -42,7 +46,7 @@ export const validateMediaFiles = (mediaFiles: FileList | null): boolean => {
 
 	const maxSize = 10 * 1024 * 1024 // 10MB em bytes
 	if (totalSize > maxSize) {
-		return false // Se o tamanho total for maior que 10MB, a validação falha
+		return false
 	}
 
 	return true

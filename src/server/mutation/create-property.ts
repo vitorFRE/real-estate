@@ -2,6 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 
+import { removeNonNumericChars } from '@/lib/utils'
+
 import { getSession } from '../auth'
 import { db } from '../db'
 
@@ -44,14 +46,14 @@ export const createProperty = async (props: ICreateProperty) => {
 			data: {
 				title: props.title,
 				description: props.description,
-				price: props.price,
+				price: parseFloat(removeNonNumericChars(props.price)),
 				locationValue: props.locationValue,
 				bedroomCount: props.bedroomCount,
 				bathroomCount: props.bathroomCount,
 				city: props.city,
 				state: props.state,
-				area: props.area,
-				buildingArea: props.buildingArea,
+				area: parseFloat(removeNonNumericChars(props.area)),
+				buildingArea: parseFloat(removeNonNumericChars(props.buildingArea)),
 				latitude: props.latitude,
 				longitude: props.longitude,
 				neighborhood: props.neighborhood,

@@ -10,7 +10,7 @@ This app is created for study purposes only.
 
 ### Features
 
-**Interface**
+**UI**
 
 - [x] Login page;
 - [x] Home page;
@@ -19,25 +19,22 @@ This app is created for study purposes only.
   - [x] Feedbacks
   - [x] Services
 - [x] Listings page;
-- [ ] Favorites page;
+- [x] Favorites page;
 - [x] Listing page;
-- [ ] Contact page;
-- [ ] Dashboard pages;
+- [x] Contact page;
+- [x] Dashboard pages;
 
-**Functions**
+**Application Functions**
 
 - [x] User authentication (signup, login, logout);
   - [x] Signup
   - [x] Login
   - [x] Logout
-- [ ] Add listings to favorites;
+- [x] Add listings to favorites;
+- [x] Filter for properties page;
 - [ ] Pagination for listings;
 - [x] Manage property (add, delete, edit);
   - [x] Add
   - [x] Edit
   - [x] Delete
 - [ ] View statistics and analytics about listings;
-
-**ToDo**
-
-- [x] Add a dropdown menu to the user icon in the header (Listings, Favorites, Logout, Dashboard if is an ADMIN);

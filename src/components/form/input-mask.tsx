@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 interface FormInputMaskProps extends InputProps {
 	mask?: 'phoneNumber' | 'meters' | 'money'
 }
+
 const FormInputMask = React.forwardRef<HTMLInputElement, FormInputMaskProps>(
 	({ className, mask, ...rest }, ref) => {
 		const [prevValue, setPrevValue] = React.useState('')
@@ -33,10 +34,17 @@ const FormInputMask = React.forwardRef<HTMLInputElement, FormInputMaskProps>(
 				inputValue = inputValue.replace(/^0+/, '')
 				inputValue = 'm² ' + inputValue.slice(0, 6)
 			} else if (mask === 'money') {
-				inputValue = inputValue.replace(/\D/g, '')
-				inputValue = inputValue.replace(/(\d{2})$/, ',$1')
-				inputValue = inputValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-				inputValue = 'R$ ' + inputValue
+				inputValue = inputValue
+					.replace('.', '')
+					.replace(',', '')
+					.replace(/\D/g, '')
+
+				const options = { minimumFractionDigits: 2 }
+				const result = new Intl.NumberFormat('pt-BR', options).format(
+					parseFloat(inputValue) / 100
+				)
+
+				inputValue = 'R$ ' + result
 
 				if (inputValue.length > 16) {
 					inputValue = prevValue
@@ -47,12 +55,18 @@ const FormInputMask = React.forwardRef<HTMLInputElement, FormInputMaskProps>(
 			setPrevValue(inputValue)
 		}
 
+		const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+			if (event.key !== 'Backspace' && event.key !== 'Delete') {
+				handleChange(event as unknown as React.ChangeEvent<HTMLInputElement>)
+			}
+		}
+
 		return (
 			<Input
 				{...rest}
 				ref={ref}
 				className={cn(className)}
-				onChange={handleChange}
+				onKeyUp={handleKeyDown}
 			/>
 		)
 	}
