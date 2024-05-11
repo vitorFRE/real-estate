@@ -22,16 +22,20 @@ export const getFavoriteProperties = async () => {
 			}
 		})
 
-		if (favorites.length <= 0) {
+		const visibleFavorites = favorites.filter(
+			(favorite) => favorite.Property?.visibility
+		)
+
+		if (visibleFavorites.length <= 0) {
 			return {
 				status: 'error',
-				message: 'Sem favoritos'
+				message: 'Sem favoritos visíveis'
 			}
 		}
 
 		return {
-			status: 'sucess',
-			data: favorites
+			status: 'sucesso',
+			data: visibleFavorites
 		}
 	} catch (error) {
 		console.log(error)
