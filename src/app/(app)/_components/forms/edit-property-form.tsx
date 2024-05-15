@@ -52,10 +52,10 @@ export const EditPropertyForm = ({ property }: EditPropertyFormProps) => {
 		resolver: zodResolver(EditPropertyDTO),
 		defaultValues: {
 			title: property.title,
-			area: property.area,
+			area: 'm² ' + property.area.toString(),
 			bathroomCount: property.bathroomCount,
 			bedroomCount: property.bedroomCount,
-			buildingArea: property.buildingArea,
+			buildingArea: 'm² ' + property.buildingArea.toString(),
 			city: property.city,
 			description: property.description,
 			latitude: property.latitude,
@@ -63,7 +63,11 @@ export const EditPropertyForm = ({ property }: EditPropertyFormProps) => {
 			locationValue: property.locationValue,
 			neighborhood: property.neighborhood,
 			state: property.state,
-			price: property.price,
+			price:
+				'R$ ' +
+				new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(
+					property.price / 100
+				),
 			media: null,
 			visibility: property.visibility
 		}

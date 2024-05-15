@@ -11,6 +11,7 @@ import { DashboardHeader } from '../_components/dashboard-header'
 
 const Name = async () => {
 	const properties = await getProperties({})
+
 	dayjs.extend(utc)
 	dayjs.extend(relativeTime)
 	dayjs.locale('pt-br')
