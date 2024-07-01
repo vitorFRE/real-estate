@@ -29,7 +29,7 @@ const Name = async () => {
 		<>
 			<DashboardHeader title="Inicio" icon={Home} />
 			<section className="mt-8 px-4 pb-12 pt-8 lg:mt-0">
-				<div className="grid grid-cols-3 gap-4">
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
 					<DashboardCard
 						Icon={Building2}
 						title="Total de propriedades"
@@ -52,7 +52,7 @@ const Name = async () => {
 				{properties.data ? (
 					<div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
 						{properties.data
-							?.slice(0, 6)
+							?.slice(0, 4)
 							.map((item) => (
 								<DetailsPropertyCard
 									id={item.id}
